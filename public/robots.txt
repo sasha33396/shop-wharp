@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://wharp-app.ru/sitemap.xml
