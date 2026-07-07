@@ -50,10 +50,8 @@ export interface Product {
   logoTile?: boolean;
 }
 
-const steam = (appid: number) =>
-  `https://cdn.cloudflare.steamstatic.com/steam/apps/${appid}/header.jpg`;
-
-const si = (slug: string) => `https://cdn.simpleicons.org/${slug}/ffffff`;
+const steam = (_appid: number) => "";
+const si = (slug: string) => brandTile(slug);
 
 // Реальные изображения: Steam CDN для игр, Simple Icons для брендов (единый стиль)
 export const IMAGES: Record<string, string> = {

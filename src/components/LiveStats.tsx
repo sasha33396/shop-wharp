@@ -10,14 +10,26 @@ export function LiveStats() {
   useEffect(() => {
     setOnline(80 + Math.floor(Math.random() * 71));
 
-    // Реальные курсы ЦБ РФ
-    fetch("https://www.cbr-xml-daily.ru/daily_json.js")
-      .then((r) => r.json())
-      .then((d) => {
-        if (d?.Valute?.USD?.Value) setUsd(+d.Valute.USD.Value.toFixed(2));
-        if (d?.Valute?.EUR?.Value) setEur(+d.Valute.EUR.Value.toFixed(2));
-      })
-      .catch(() => {});
+    const loadRates = async () => {
+      try {
+        const response = await fetch("https://www.cbr-xml-daily.ru/daily_json.js", {
+          cache: "no-store",
+        });
+        if (!response.ok) throw new Error("rates unavailable");
+
+        const data = await response.json();
+        const usdValue = Number(data?.Valute?.USD?.Value);
+        const eurValue = Number(data?.Valute?.EUR?.Value);
+
+        setUsd(Number.isFinite(usdValue) ? usdValue : null);
+        setEur(Number.isFinite(eurValue) ? eurValue : null);
+      } catch {
+        setUsd(null);
+        setEur(null);
+      }
+    };
+
+    loadRates();
 
     const updateTime = () => {
       const d = new Date();

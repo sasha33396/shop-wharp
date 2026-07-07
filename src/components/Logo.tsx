@@ -1,9 +1,7 @@
-import logoAsset from "@/assets/wharp-logo.svg.asset.json";
-
 export function Logo({ className = "" }: { className?: string }) {
   return (
     <img
-      src={logoAsset.url}
+      src="/wharp-logo.svg"
       alt="Wharp"
       className={className}
       draggable={false}
@@ -11,4 +9,3 @@ export function Logo({ className = "" }: { className?: string }) {
     />
   );
 }
-
