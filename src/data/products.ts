@@ -50,8 +50,8 @@ export interface Product {
   logoTile?: boolean;
 }
 
-const steam = (_appid: number) => "";
-const si = (slug: string) => brandTile(slug);
+const steam = (appid: number) => `/images/steam/${appid}.jpg`;
+const si = (slug: string) => `/images/brands/${slug}.svg`;
 
 // Реальные изображения: Steam CDN для игр, Simple Icons для брендов (единый стиль)
 export const IMAGES: Record<string, string> = {
@@ -207,7 +207,7 @@ const make = (p: Omit<Product, "id" | "slug" | "image" | "cover" | "rating" | "r
     .toLowerCase()
     .replace(/[^a-zа-я0-9\s-]/gi, "")
     .replace(/\s+/g, "-");
-  const image = p.image ?? IMAGES[p.title] ?? FALLBACK[p.category];
+  const image = p.image || IMAGES[p.title] || FALLBACK[p.category] || brandTile(p.title);
   const h = hash(slug);
   return {
     id: slug,
